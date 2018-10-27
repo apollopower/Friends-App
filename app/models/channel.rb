@@ -7,6 +7,7 @@ class Channel < ApplicationRecord
     before_save :generate_slug
 
     validates :title, presence: true, length: { maximum: 50 }
+    validates :slug, uniqueness: true
 
 
     private
