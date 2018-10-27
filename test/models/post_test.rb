@@ -17,4 +17,20 @@ class PostTest < ActiveSupport::TestCase
     
     assert_not @post.valid?
   end
+
+  test "Post should not be empty" do
+    @post.content = "     "
+
+    assert_not @post.valid?
+  end
+
+  test "Post should not be extremely short" do
+    @post.content = "H"
+
+    assert_not @post.valid?
+  end
+
+  test "Post should belong to at least one channel" do
+    assert_not @post.channels.empty?
+  end
 end

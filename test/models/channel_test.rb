@@ -10,7 +10,6 @@ class ChannelTest < ActiveSupport::TestCase
 
     @channel = @user.channels.create(title: "High School Pals")
 
-    # @user.channels.push(@channel)
   end
 
   test "Channel should be valid" do
@@ -32,13 +31,13 @@ class ChannelTest < ActiveSupport::TestCase
   end
 
   test "Channel should have original user" do
-    assert @channel.users.first['first_name'] == @user.first_name
+    assert @channel.users.include?(@user)
   end
 
   test "Channel should be able to include other users" do
     @channel.users.push(@other_user)
 
-    assert @channel.users.first['first_name'] == @other_user.first_name
+    assert @channel.users.include?(@other_user)
   end
 
   test "Channel should have slug" do
