@@ -1,0 +1,5 @@
+snorlax:
+  first_name: Mister
+  last_name: Snorlax
+  email: snorlax@pokemon.com
+  password_digest: <%= User.digest('password') %>
