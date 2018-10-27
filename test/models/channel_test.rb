@@ -41,4 +41,14 @@ class ChannelTest < ActiveSupport::TestCase
 
     assert @channel.users.last['first_name'] == @other_user.first_name
   end
+
+  test "Channel should have slug" do
+    assert_not @channel.slug.empty?
+  end
+
+  test "Duplicate slugs should not exist" do
+    other_channel = Channel.create(title: "Other Channel")
+
+    assert @channel.slug != other_channel.slug
+  end
 end

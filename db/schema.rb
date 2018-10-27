@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_27_142644) do
+ActiveRecord::Schema.define(version: 2018_10_27_153535) do
 
   create_table "channels", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
   end
 
   create_table "channels_users", id: false, force: :cascade do |t|
