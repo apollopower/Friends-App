@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+    has_and_belongs_to_many :channels
+    
     before_save { self.email = email.downcase }
 
     validates :first_name, presence: true, length: { maximum: 50 }
