@@ -38,4 +38,12 @@ class PostTest < ActiveSupport::TestCase
     assert_equal posts(:most_recent), Post.first
   end
 
+  test "Associated comments should be destroyed" do
+    @user.comments.create!(content: "wawawa", post_id: @post.id, channel_id: @channel.id)
+
+    assert_difference 'Comment.count', -1 do
+      @post.destroy
+    end
+  end
+
 end

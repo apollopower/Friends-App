@@ -73,4 +73,28 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  test "Associated posts should be destroyed" do
+    @user.save
+    @user.posts.create!(content: "Whatsup Fam!")
+
+    assert_difference 'Post.count', -1 do
+      @user.destroy
+    end
+  end
+
+  test "Associated comments should be destroyed" do
+    @user.save
+    @channel = @user.channels.create!(title: "Fam Jam")
+    @post = @user.posts.create!(content: "Hey there fam!")
+
+    @channel.posts.push(@post)
+
+    @user.comments.create!(content: "Hows it going?", post_id: @post.id, channel_id: @channel.id)
+
+    assert_difference 'Comment.count', -1 do
+      @user.destroy
+    end
+
+  end
+
 end
