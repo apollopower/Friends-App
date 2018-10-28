@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
     has_many :posts
+    has_many :comments
     has_and_belongs_to_many :channels
     
     before_save { self.email = email.downcase }
