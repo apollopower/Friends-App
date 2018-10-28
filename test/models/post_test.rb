@@ -6,7 +6,9 @@ class PostTest < ActiveSupport::TestCase
     @user = users(:snorlax)
     @channel = @user.channels.create(title: "Fake Channel")
 
-    @post = @user.posts.build(content: "Hello my friends!")
+    @post = posts(:orange)
+    @post.user_id = @user.id
+
     @channel.posts.push(@post)
   end
 
@@ -30,6 +32,10 @@ class PostTest < ActiveSupport::TestCase
     @post.content = "H"
 
     assert_not @post.valid?
+  end
+
+  test "Post order should be more recent first" do
+    assert_equal posts(:most_recent), Post.first
   end
 
 end

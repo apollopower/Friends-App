@@ -7,7 +7,7 @@ class CommentTest < ActiveSupport::TestCase
 
     @channel = @user.channels.create(title: "Jonas Channel")
 
-    @post = @user.posts.build(content: "Hello there friends!")
+    @post = @user.posts.build(content: "Good to see you!")
     @channel.posts.push(@post)
 
     @comment = @user.comments.build(content: "How is it going?", post_id: @post.id, channel_id: @channel.id)
@@ -46,5 +46,9 @@ class CommentTest < ActiveSupport::TestCase
     @comment.content = "a" * 281
 
     assert_not @comment.valid?
+  end
+
+  test "Comment Order should be most recent first" do
+    assert_equal comments(:most_recent), Comment.first
   end
 end
