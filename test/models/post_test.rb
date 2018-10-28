@@ -4,8 +4,10 @@ class PostTest < ActiveSupport::TestCase
 
   def setup
     @user = users(:snorlax)
+    @channel = @user.channels.create(title: "Fake Channel")
 
     @post = @user.posts.build(content: "Hello my friends!")
+    @channel.posts.push(@post)
   end
 
   test "Post should be valid" do
@@ -30,7 +32,4 @@ class PostTest < ActiveSupport::TestCase
     assert_not @post.valid?
   end
 
-  test "Post should belong to at least one channel" do
-    assert_not @post.channels.empty?
-  end
 end

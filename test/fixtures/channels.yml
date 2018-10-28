@@ -1,0 +1,3 @@
+test_channel:
+  title: MyTestChannel
+  slug: <%= SecureRandom.urlsafe_base64 %>
