@@ -75,7 +75,8 @@ class UserTest < ActiveSupport::TestCase
 
   test "Associated posts should be destroyed" do
     @user.save
-    @user.posts.create!(content: "Whatsup Fam!")
+    @channel = @user.channels.create!(title: "Fam Jam")
+    @user.posts.create!(content: "Whatsup Fam!", channel_id: @channel.id)
 
     assert_difference 'Post.count', -1 do
       @user.destroy
@@ -85,9 +86,7 @@ class UserTest < ActiveSupport::TestCase
   test "Associated comments should be destroyed" do
     @user.save
     @channel = @user.channels.create!(title: "Fam Jam")
-    @post = @user.posts.create!(content: "Hey there fam!")
-
-    @channel.posts.push(@post)
+    @post = @user.posts.create!(content: "Hey there fam!", channel_id: @channel.id)
 
     @user.comments.create!(content: "Hows it going?", post_id: @post.id, channel_id: @channel.id)
 

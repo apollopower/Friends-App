@@ -7,10 +7,10 @@ class CommentTest < ActiveSupport::TestCase
 
     @channel = @user.channels.create(title: "Jonas Channel")
 
-    @post = @user.posts.build(content: "Good to see you!")
-    @channel.posts.push(@post)
+    @post = @user.posts.create!(content: "Good to see you!", channel_id: @channel.id)
 
-    @comment = @user.comments.build(content: "How is it going?", post_id: @post.id, channel_id: @channel.id)
+    @comment = @user.comments.create!(content: "How is it going?", post_id: @post.id,
+                              channel_id: @channel.id, created_at: "#{2.minutes.ago}")
 
   end
 

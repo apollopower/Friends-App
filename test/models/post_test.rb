@@ -6,10 +6,8 @@ class PostTest < ActiveSupport::TestCase
     @user = users(:snorlax)
     @channel = @user.channels.create(title: "Fake Channel")
 
-    @post = posts(:orange)
-    @post.user_id = @user.id
+    @post = @user.posts.create(content: "My Post!", channel_id: @channel.id, created_at: "#{2.minutes.ago}")
 
-    @channel.posts.push(@post)
   end
 
   test "Post should be valid" do
@@ -22,14 +20,26 @@ class PostTest < ActiveSupport::TestCase
     assert_not @post.valid?
   end
 
+  test "Channel ID should be present" do
+    @post.channel_id = nil
+
+    assert_not @post.valid?
+  end
+
   test "Post should not be empty" do
     @post.content = "     "
 
     assert_not @post.valid?
   end
 
-  test "Post should not be extremely short" do
+  test "Post should be longer than 1 character" do
     @post.content = "H"
+
+    assert_not @post.valid?
+  end
+
+  test "Post should be no longer than 1120 characters" do
+    @post.content = "a" * 1121
 
     assert_not @post.valid?
   end
